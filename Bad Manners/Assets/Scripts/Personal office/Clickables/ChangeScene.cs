@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class ChangeScene : Clickable {
-    enum Mode {
+    public enum Mode {
         nextLevel,
         previousLevel,
         specificLevel
