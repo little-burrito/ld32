@@ -3,14 +3,14 @@ using System.Collections;
 
 public class Clickable : MonoBehaviour {
 
-    private Animator anim;
     private bool isSelected;
-    private SpriteRenderer sprite;
+    public ParticleSystem hoverParticleSystem;
 
 	// Use this for initialization
 	void Start () {
-        anim = GetComponent<Animator>();
-        sprite = GetComponent<SpriteRenderer>();
+        if ( GetComponent<Collider2D>() == null ) {
+            Debug.LogError( gameObject.name + " har ingen collider och kan därför inte klickas på" );
+        }
 	}
 
 	// Update is called once per frame
@@ -20,33 +20,34 @@ public class Clickable : MonoBehaviour {
                 Action();
             }
         }
-        if ( !isSelected ) {
-            GameObject controllerObject = GameObject.FindGameObjectWithTag( "Controller" );
-            if ( controllerObject != null ) {
-                Controller controller = controllerObject.GetComponent<Controller>();
-                if ( controller != null ) {
-                    if ( controller.cash > 500 ) {
-                        sprite.color = new Color( 0.0f, 1.0f, 0.0f );
-                    } else {
-                        sprite.color = new Color( 1.0f, 1.0f, 1.0f );
-                    }
-                }
-            }
-        }
 	}
 
     void OnMouseEnter() {
         isSelected = true;
-        sprite.color = new Color( 1.0f, 0.0f, 0.0f );
-        if ( anim != null ) {
-            anim.SetBool( "isSelected", isSelected );
-        }
+        UpdateHoverEffect();
     }
     void OnMouseExit() {
         isSelected = false;
-        sprite.color = new Color( 1.0f, 1.0f, 1.0f );
-        if ( anim != null ) {
-            anim.SetBool( "isSelected", isSelected );
+        UpdateHoverEffect();
+    }
+
+    public void Disable() {
+        isSelected = false;
+        GetComponent<Collider2D>().enabled = false;
+        UpdateHoverEffect();
+    }
+    public void Enable() {
+        GetComponent<Collider2D>().enabled = true;
+    }
+
+    public void UpdateHoverEffect() {
+        if ( hoverParticleSystem != null ) {
+            if ( isSelected ) {
+                hoverParticleSystem.Play();
+            } else {
+                hoverParticleSystem.Stop();
+                hoverParticleSystem.Clear();
+            }
         }
     }
 
