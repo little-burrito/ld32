@@ -4,7 +4,7 @@ using System.Collections;
 public class CoworkerAttention : MonoBehaviour {
 	void OnTriggerStay2D (Collider2D col) {
 		if (col.tag == "DeadCoworker" || col.tag == "Player") {
-			Vector2 dist = col.attachedRigidbody.position - ((Vector2) this.transform.position);
+			Vector2 dist = (Vector2)(col.transform.position - this.transform.position);
 			RaycastHit2D hit = Physics2D.Raycast(
 				(Vector2) this.transform.position + dist*0.5f,
 				dist,
