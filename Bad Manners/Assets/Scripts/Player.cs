@@ -191,6 +191,7 @@ public class Player : MonoBehaviour {
 	}
 	private void showMessage(SMS message) {
 		mobile.SetText (message.Content);
+		mobile.senderName.text = message.Sender;
 		mobile.Activate ();
 		cash = cash + message.Transaction;
 	}
