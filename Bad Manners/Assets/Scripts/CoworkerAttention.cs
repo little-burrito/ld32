@@ -13,6 +13,7 @@ public class CoworkerAttention : MonoBehaviour {
 	}
 
 	void Bust() {
+		transform.parent.FindChild("Alert").gameObject.SetActive(true);
 		busted.StartBusted();
 	}
 
