@@ -7,8 +7,8 @@ public class CashMeter : MonoBehaviour {
     public Image fillBar;
     public Text cashGoalDisplayText;
     public Text currentCashDisplayText;
-    public int cashGoal;
-    public int currentCash;
+    public float cashGoal;
+    public float currentCash;
 
     void Update() {
         UpdateCashBar();
@@ -22,6 +22,13 @@ public class CashMeter : MonoBehaviour {
     }
 
     public void UpdateCashBar() {
-        fillBar.fillAmount = Mathf.Min( 1.0f, ( float )( ( float )currentCash / ( float )cashGoal * 0.734f ) );
+		if (currentCash < (cashGoal / 2)) {
+			fillBar.color = Color.red;
+		}else if (currentCash < cashGoal) {
+			fillBar.color = Color.yellow;
+		} else {
+			fillBar.color = Color.green;
+		}
+		fillBar.fillAmount = Mathf.Min( 1.0f, ( float )( ( float )currentCash / ( float )cashGoal * 0.734f ) );
     }
 }
