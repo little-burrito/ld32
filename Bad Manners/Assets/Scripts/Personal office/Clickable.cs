@@ -12,16 +12,27 @@ public class Clickable : MonoBehaviour {
         if ( GetComponent<Collider2D>() == null ) {
             Debug.LogError( gameObject.name + " har ingen collider och kan därför inte klickas på" );
         }
-        mobile = GameObject.FindGameObjectWithTag( "Mobile" ).GetComponent<Mobile>();
+		GameObject mobileObject = GameObject.FindGameObjectWithTag ("Mobile");
+		if ( mobileObject != null) {
+			Mobile mobileComponent = mobileObject.GetComponent<Mobile>();
+			if ( mobileComponent != null ) {
+				mobile = mobileComponent;
+			}
+		}
 	}
 
 	// Update is called once per frame
 	void Update () {
         if ( isSelected ) {
-            if ( mobile.isActive ) {
-                isSelected = false;
-                UpdateHoverEffect();
-            }
+			if (mobile != null) {
+	            if ( mobile.isActive ) {
+	                isSelected = false;
+	                UpdateHoverEffect();
+	            }
+			} else {
+				isSelected = false;
+				UpdateHoverEffect();
+			}
         }
         if ( Input.GetMouseButtonDown( 0 ) ) { // Om man vänsterklickar
             if ( isSelected ) {
@@ -31,10 +42,15 @@ public class Clickable : MonoBehaviour {
 	}
 
     void OnMouseOver() {
-        if ( !mobile.isActive ) {
-            isSelected = true;
-            UpdateHoverEffect();
-        }
+		if (mobile != null) {
+			if (!mobile.isActive) {
+				isSelected = true;
+				UpdateHoverEffect ();
+			}
+		} else {
+			isSelected = true;
+			UpdateHoverEffect ();
+		}
     }
     void OnMouseExit() {
         isSelected = false;

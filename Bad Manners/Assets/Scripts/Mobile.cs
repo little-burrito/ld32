@@ -20,7 +20,6 @@ public class Mobile : MonoBehaviour {
 	void Start () {
         isActive = false;
         anim = GetComponent<Animator>();
-        SetText( "Hej på dig!" );
 	}
 
     void Update() {
