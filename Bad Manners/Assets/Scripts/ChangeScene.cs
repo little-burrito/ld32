@@ -15,11 +15,11 @@ public class ChangeScene : MonoBehaviour {
     public void Trigger() {
         switch ( mode ) {
             case Mode.nextLevel: {
-                Application.LoadLevelAdditive( 1 );
+                Application.LoadLevel( Application.loadedLevel + 1 );
                 break;
                 }
             case Mode.previousLevel: {
-                Application.LoadLevelAdditive( -1 );
+                Application.LoadLevel( Application.loadedLevel - 1 );
                 break;
                 }
             case Mode.specificLevel: {

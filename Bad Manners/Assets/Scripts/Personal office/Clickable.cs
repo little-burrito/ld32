@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Clickable : MonoBehaviour {
 
-    private bool isSelected;
+    public bool isSelected;
     public ParticleSystem hoverParticleSystem;
     private Mobile mobile;
 
