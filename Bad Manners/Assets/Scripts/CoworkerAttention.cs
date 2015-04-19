@@ -20,7 +20,7 @@ public class CoworkerAttention : MonoBehaviour {
 		if (col.tag == "DeadCoworker" || col.tag == "Player") {
 			Vector2 dist = (Vector2)(col.transform.position - this.transform.position);
 			RaycastHit2D hit = Physics2D.Raycast(
-				(Vector2) this.transform.position + dist*0.5f,
+				(Vector2) this.transform.position,
 				dist,
 				dist.magnitude,
 				1 << LayerMask.NameToLayer("Characters") |
