@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ChangeScene : Clickable {
+public class ChangeScene : MonoBehaviour {
+
     public enum Mode {
         nextLevel,
         previousLevel,
         specificLevel
     }
+
     public Mode mode;
     public string specificLevelName;
-    protected override void Action() {
+
+    public void Trigger() {
         switch ( mode ) {
             case Mode.nextLevel: {
                 Application.LoadLevelAdditive( 1 );
