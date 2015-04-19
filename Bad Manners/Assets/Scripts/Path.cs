@@ -18,7 +18,7 @@ public class Path : MonoBehaviour {
 
 	private List<GameObject> waypoints;
 	private int currentWaypoint = 0;
-	private float waypointRadius = 1f;
+	private float waypointRadius = 0.5f;
 	private bool returning = false;
 
 	public void RestartWalk() {
@@ -39,7 +39,7 @@ public class Path : MonoBehaviour {
 	void Start () {
 		waypoints = findWaypoints();
 		if (walking) {
-			StartWalk();
+			RestartWalk();
 		}
 	}
 
@@ -101,7 +101,7 @@ public class Path : MonoBehaviour {
 				}
 			}
 		}
-		rb.velocity = direction.normalized * speed;
+		rb.velocity = (Vector2) direction.normalized * speed;
 	}
 
 	void Update() {
