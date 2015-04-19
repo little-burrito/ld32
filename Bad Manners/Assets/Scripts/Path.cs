@@ -21,17 +21,25 @@ public class Path : MonoBehaviour {
 	private float waypointRadius = 1f;
 	private bool returning = false;
 
-	void startWalk() {
-		walking = true;
+	public void RestartWalk() {
 		currentWaypoint = 0;
 		target.transform.position = waypoints[currentWaypoint].transform.position;
+		StartWalk();
+	}
+
+	public void StartWalk() {
+		walking = true;
 		look();
+	}
+
+	public void StopWalk() {
+		walking = false;
 	}
 
 	void Start () {
 		waypoints = findWaypoints();
 		if (walking) {
-			startWalk();
+			StartWalk();
 		}
 	}
 
@@ -93,8 +101,12 @@ public class Path : MonoBehaviour {
 				}
 			}
 		}
-		look();
 		rb.velocity = direction.normalized * speed;
+	}
+
+	void Update() {
+		if (!walking) { return; }
+		look();
 	}
 
 	List<GameObject> findWaypoints() {
