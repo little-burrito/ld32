@@ -44,7 +44,7 @@ public class Mobile : MonoBehaviour {
     }
 
     private void UpdateAnimator() {
-        anim.SetBool( "isActive", isActive );
+		anim.SetBool( "isActive", isActive );
     }
 
     public void Activate() {
