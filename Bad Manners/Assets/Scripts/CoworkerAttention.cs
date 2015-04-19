@@ -17,14 +17,14 @@ public class CoworkerAttention : MonoBehaviour {
 				hit.collider.tag == "Player" &&
 				hit.collider.GetComponent<PickupDeadCoworker>().isCarrying()
 			) {
-				Debug.Log("PLAYER WITH BODY HAS BEEN DETECTED!!!");
+				//Debug.Log("PLAYER WITH BODY HAS BEEN DETECTED!!!");
 			} else if (
 				hit &&
 				hit.collider.tag == "DeadCoworker"
 			) {
-				Debug.Log("BODY HAS BEEN DETECTED!!!");
+				//Debug.Log("BODY HAS BEEN DETECTED!!!");
 			} else {
-				Debug.Log("vision blocked");
+				//Debug.Log("vision blocked");
 			}
 		}
 	}
