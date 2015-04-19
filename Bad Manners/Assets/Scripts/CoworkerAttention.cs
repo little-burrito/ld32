@@ -19,8 +19,9 @@ public class CoworkerAttention : MonoBehaviour {
 	void OnTriggerStay2D (Collider2D col) {
 		if (col.tag == "DeadCoworker" || col.tag == "Player") {
 			Vector2 dist = (Vector2)(col.transform.position - this.transform.position);
+			Vector2 start = (Vector2) this.transform.position + dist*0.1f;
 			RaycastHit2D hit = Physics2D.Raycast(
-				(Vector2) this.transform.position + dist*0.5f,
+				start,
 				dist,
 				dist.magnitude,
 				1 << LayerMask.NameToLayer("Characters") |
@@ -31,11 +32,13 @@ public class CoworkerAttention : MonoBehaviour {
 				hit.collider.tag == "Player" &&
 				hit.collider.GetComponent<PickupDeadCoworker>().isCarrying()
 			) {
+				//Debug.DrawRay(start, dist, Color.green, 1f);
 				Bust();
 			} else if (
 				hit &&
 				hit.collider.tag == "DeadCoworker"
 			) {
+				//Debug.DrawRay(start, dist, Color.green, 1f);
 				Bust();
 			} else {
 				//Debug.Log("vision blocked");

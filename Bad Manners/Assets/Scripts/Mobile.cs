@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Mobile : MonoBehaviour {
 
     public Text visibleMessage;
+	public Text senderName;
     private float previousX;
     private float previousY;
     private float previousZ;
