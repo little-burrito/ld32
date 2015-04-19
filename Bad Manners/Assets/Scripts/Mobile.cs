@@ -23,6 +23,10 @@ public class Mobile : MonoBehaviour {
         SetText( "Hej på dig!" );
 	}
 
+    void Update() {
+        anim.SetBool( "isActive", isActive );
+    }
+
     public void SetText( string text ) {
         visibleMessage.text = text;
         newMessageSound.Play();
