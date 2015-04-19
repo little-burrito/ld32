@@ -17,11 +17,17 @@ public class IntroCutscenePlayer : MonoBehaviour {
         }
 	}
 
+    void Update() {
+        if ( Input.GetKeyDown( KeyCode.Escape ) ) {
+            CutsceneFinished();
+        }
+    }
+
     void PlaySound() {
         sound.Play();
     }
 
-    void CutsceneFinished() {
+    public void CutsceneFinished() {
         foreach ( GameObject obj in objectsToDisableAfterCutscene ) {
             obj.SetActive( false );
         }
