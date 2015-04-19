@@ -20,6 +20,7 @@ public class Mobile : MonoBehaviour {
 	void Start () {
         isActive = false;
         anim = GetComponent<Animator>();
+        SetText( "Hej på dig!" );
 	}
 
     void Update() {
@@ -28,6 +29,9 @@ public class Mobile : MonoBehaviour {
 
     public void SetText( string text ) {
         visibleMessage.text = text;
+    }
+
+    public void PlayMessageNotification() {
         newMessageSound.Play();
     }
 
