@@ -29,6 +29,9 @@ public class Mobile : MonoBehaviour {
 
     public void SetText( string text ) {
         visibleMessage.text = text;
+    }
+
+    public void PlayMessageNotification() {
         newMessageSound.Play();
     }
 

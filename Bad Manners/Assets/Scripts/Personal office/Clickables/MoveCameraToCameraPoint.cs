@@ -15,8 +15,16 @@ public class MoveCameraToCameraPoint : Clickable {
 
         if ( interfaceToEnable != null ) {
             interfaceToEnable.SetActive( true );
+            Clickable[] clickables = GetComponentsInChildren<Clickable>( true );
+            foreach ( Clickable clickable in clickables ) {
+                clickable.isSelected = false;
+            }
         }
         if ( interfaceToDisable != null ) {
+            Clickable[] clickables = GetComponentsInChildren<Clickable>( true );
+            foreach ( Clickable clickable in clickables ) {
+                clickable.isSelected = false;
+            }
             interfaceToDisable.SetActive( false );
         }
         if ( clickableToEnable != null ) {

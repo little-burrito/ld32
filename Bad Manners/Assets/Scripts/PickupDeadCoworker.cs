@@ -3,17 +3,22 @@ using System.Collections;
 
 public class PickupDeadCoworker : MonoBehaviour {
 
-	public Vector2 dropDistance = new Vector2(0, -2.0f);
-	public float carryVelocity = 0.75f;
+	public Vector2 dropDistance = new Vector2(0, -2.5f);
+	public float carryVelocity = 0.65f;
 
 	private bool carrying = false;
 	private GameObject deadCoworker;
+	private Animator anim;
+
+	void Start() {
+		anim = GetComponent<Animator>();
+	}
 
 	void carry() {
 		deadCoworker.SetActive(false);
 		carrying = true;
-		this.gameObject.transform.FindChild("Carry").gameObject.SetActive(true);
-		this.gameObject.transform.FindChild("Normal").gameObject.SetActive(false);
+		anim.SetBool("Carry Body", true);
+		anim.SetBool("Bloody", true);
 		gameObject.GetComponent<UserControl>().velocityMultiplier *= carryVelocity;
 		gameObject.GetComponent<Rigidbody2D>().mass += deadCoworker.GetComponent<Rigidbody2D>().mass;
 	}
@@ -23,10 +28,10 @@ public class PickupDeadCoworker : MonoBehaviour {
 		deadCoworker.transform.Translate(dropDistance);
 		deadCoworker.SetActive(true);
 		carrying = false;
-		this.gameObject.transform.FindChild("Carry").gameObject.SetActive(false);
-		this.gameObject.transform.FindChild("Normal").gameObject.SetActive(true);
+		anim.SetBool("Carry Body", false);
 		gameObject.GetComponent<UserControl>().velocityMultiplier /= carryVelocity;
-		gameObject.GetComponent<Rigidbody2D>().mass += deadCoworker.GetComponent<Rigidbody2D>().mass;
+		gameObject.GetComponent<Rigidbody2D>().mass -= deadCoworker.GetComponent<Rigidbody2D>().mass;
+		transform.FindChild("Player Body").FindChild("Dead Body").gameObject.SetActive(false);
 	}
 
 	public bool isCarrying() {
@@ -34,7 +39,7 @@ public class PickupDeadCoworker : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D col) {
-		if (col.collider.tag == "DeadCoworker") {
+		if (!carrying && col.collider.tag == "DeadCoworker") {
 			deadCoworker = col.collider.gameObject;
 			carry();
 		}
