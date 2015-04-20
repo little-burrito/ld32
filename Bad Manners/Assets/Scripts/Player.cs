@@ -172,7 +172,7 @@ public class Player : MonoBehaviour {
 				PlayerPrefs.SetInt ("kills", kills);
 				// TODO: trigger new scene
 				Debug.Log ("You've killed: " + colleague.name);
-                Application.LoadLevel( Application.loadedLevel + 2 );
+                Application.LoadLevel( Application.loadedLevel + 1 );
 			}
 			/*foreach (Colleague colleague in Colleagues) {
 				Debug.Log ("Checking if colleague is alive: " + colleague.name + ", dead:" + colleague.Dead);
