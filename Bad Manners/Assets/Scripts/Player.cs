@@ -223,7 +223,7 @@ public class Player : MonoBehaviour {
 				clipperWrapper.SetActive(true);
 			}
 			if (invoicesPaid > 3) {
-				GameObject.FindGameObjectWithTag ("PayInvoice").SetActive(false);
+				//GameObject.FindGameObjectWithTag ("PayInvoice").SetActive(false);
 				// you won!
 			}
 		}
