@@ -3,13 +3,14 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
-	private int invoicesPaid = 0;
+	public int invoicesPaid = 0;
 	public float cash = 0;
-	private int salesCalls = 0;
-	private int dirtyCalls = 0;
-	private int kills = 0;
+	public int salesCalls = 0;
+	public int dirtyCalls = 0;
+	public int kills = 0;
+	public int textsRead = 0;
 	public float[] Invoices;
-	private float cashToCome = 0;
+	public float cashToCome = 0;
 	public Colleague[] Colleagues;
 	public Gem[] Clippers;
 	public SMS[] SMSList;
@@ -41,6 +42,7 @@ public class Player : MonoBehaviour {
             instance = this; // Singleton
         } // Singleton
         DontDestroyOnLoad(this.gameObject); // Singleton
+
 
 		if (mobile == null) {
 			GameObject mobileObject = GameObject.FindGameObjectWithTag ("Mobile");
@@ -101,9 +103,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void Update () {
-		if (!SMSList [0].Seen) {
-			pushStory();
-		}
+		pushStory();
 	}
 
 	private void addCash(float amount) {
@@ -111,6 +111,7 @@ public class Player : MonoBehaviour {
 		cashMeter.currentCash = cash;
 		cashMeter.cashGoal = Invoices[invoicesPaid];
 		cashMeter.setCurrentCashText ("$" + cash.ToString());
+		PlayerPrefs.SetFloat ("cash", cash);
 		cashMeter.setCashGoalText ("$" + Invoices[invoicesPaid]);
 		PushClipper ();
 	}
@@ -121,6 +122,7 @@ public class Player : MonoBehaviour {
 		cashMeter.currentCash = cash;
 		cashMeter.cashGoal = Invoices[invoicesPaid];
 		cashMeter.setCurrentCashText ("$" + cash.ToString());
+		PlayerPrefs.SetFloat ("cash", cash);
 		cashMeter.setCashGoalText ("$" + Invoices[invoicesPaid]);
 		PushClipper ();
 	}
@@ -132,11 +134,13 @@ public class Player : MonoBehaviour {
 			removeCash (Invoices [invoicesPaid]);
 			invoicesPaid++;
 			cashMeter.currentCash = cash;
+			PlayerPrefs.SetInt ("invoicesPaid", invoicesPaid);
 			cashMeter.cashGoal = Invoices[invoicesPaid];
 			cashMeter.setCurrentCashText ("$" + cash.ToString());
 			cashMeter.setCashGoalText ("$" + Invoices[invoicesPaid]);
-			Debug.Log ("Invoice paid: " + invoicesPaid.ToString () + " - New balance $" + this.cash.ToString());
 			pushStory();
+			Debug.Log ("Invoice paid: " + invoicesPaid.ToString () + " - New balance $" + this.cash.ToString());
+
 		} else {
 			dator.setScreenTextInvoice ("Your check bounced");
 		}
@@ -165,6 +169,7 @@ public class Player : MonoBehaviour {
 				cashToCome = (cashToCome + colleague.cash);
 				killMade = true;
 				kills++;
+				PlayerPrefs.SetInt ("kills", kills);
 				// TODO: trigger new scene
 				Debug.Log ("You've killed: " + colleague.name);
                 Application.LoadLevel( Application.loadedLevel + 2 );
@@ -226,18 +231,13 @@ public class Player : MonoBehaviour {
 		lastShownClipper.Seen = true;
 		for (int i = 0; i < Clippers.Length; i++) {
 			Gem clipper = Clippers[i];
-			if (clipper.Seen) {
-				lastShownClipper = clipper;
-			}
-			if (!clipper.Seen &&
-			    clipper.MinimumKills <= kills &&
+			if (clipper.MinimumKills <= kills &&
 			    clipper.MinimumInvoices <= invoicesPaid &&
 			    clipper.MinimumDirtyCalls <= dirtyCalls &&
 			    clipper.MinimumCash <= cash &&
 			    clipper.MinimumSalesCalls <= salesCalls) {
 				clipper.Seen = true;
 				lastShownClipper = clipper;
-				break;
 			}
 		}
 		//Debug.Log ("update computer with text: " + lastShownClipper.Content);
@@ -246,19 +246,23 @@ public class Player : MonoBehaviour {
 	public void pushStory() {
 		for (int i = 0; i < SMSList.Length; i++) {
 			SMS message = SMSList[i];
-			if (!message.Seen &&
-			    message.MinimumKills <= kills &&
-			    message.MinimumInvoices <= invoicesPaid &&
-			    message.MinimumDirtyCalls <= dirtyCalls &&
-			    message.MinimumSalesCalls <= salesCalls) {
-				Debug.Log("message to be shown: " + message.Content);
-				message.Seen = true;
-				showMessage(message);
-				if (message.cashTrigger && (cashToCome > 0)) {
-					this.addCash(cashToCome);
-					cashToCome = 0;
+			if (message != null) {
+				if (!message.Seen &&
+				    message.MinimumKills <= kills &&
+				    message.MinimumInvoices <= invoicesPaid &&
+				    message.MinimumDirtyCalls <= dirtyCalls &&
+				    message.MinimumSalesCalls <= salesCalls) {
+					Debug.Log("message to be shown: " + message.Content);
+					message.Seen = true;
+					textsRead++;
+					PlayerPrefs.SetInt ("textsRead", textsRead);
+					showMessage(message);
+					if (message.cashTrigger && (cashToCome > 0)) {
+						this.addCash(cashToCome);
+						cashToCome = 0;
+					}
+					break;
 				}
-				break;
 			}
 		}
 		if (dator != null) {
