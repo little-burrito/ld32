@@ -25,7 +25,6 @@ public class CoworkerPhoneCall : MonoBehaviour {
 			Random.value < probability &&
 			!anim.GetBool("MakeCall")
 		) {
-			Debug.Log("Should make call");
 			anim.SetBool("MakeCall", true);
 			path.StopWalk();
 		}
