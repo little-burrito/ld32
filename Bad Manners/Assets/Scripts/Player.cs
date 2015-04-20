@@ -167,6 +167,7 @@ public class Player : MonoBehaviour {
 				kills++;
 				// TODO: trigger new scene
 				Debug.Log ("You've killed: " + colleague.name);
+                Application.LoadLevel( Application.loadedLevel + 2 );
 			}
 			/*foreach (Colleague colleague in Colleagues) {
 				Debug.Log ("Checking if colleague is alive: " + colleague.name + ", dead:" + colleague.Dead);
@@ -242,7 +243,7 @@ public class Player : MonoBehaviour {
 		//Debug.Log ("update computer with text: " + lastShownClipper.Content);
 		dator.setScreenText (lastShownClipper.Content);
 	}
-	private void pushStory() {
+	public void pushStory() {
 		for (int i = 0; i < SMSList.Length; i++) {
 			SMS message = SMSList[i];
 			if (!message.Seen &&
