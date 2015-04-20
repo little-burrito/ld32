@@ -29,21 +29,7 @@ public class Player : MonoBehaviour {
 		get { return cash; }
 	}
 
-    private static Player instance = null; // Singleton
-    public static Player Instance { // Singleton
-        get { return instance; } // Singleton
-    } // Singleton
-
 	void Awake () {
-        if ( instance != null && instance != this ) { // Singleton
-            Destroy( this.gameObject ); // Singleton
-            return; // Singleton
-        } else { // Singleton
-            instance = this; // Singleton
-        } // Singleton
-        DontDestroyOnLoad(this.gameObject); // Singleton
-
-
 		if (mobile == null) {
 			GameObject mobileObject = GameObject.FindGameObjectWithTag ("Mobile");
 			if (mobileObject != null) {
